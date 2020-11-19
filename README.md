@@ -16,3 +16,8 @@ Sistema simples feito em PHP7 respeitando a PSR e a documentação da linguagem 
 * Todo ambiente configurado com o Xampp
  LINK: https://www.apachefriends.org/pt_br/index.html
  
+ # Base de dados/Tabela:`repair`:
+ 
+ 
+ 
+ 
