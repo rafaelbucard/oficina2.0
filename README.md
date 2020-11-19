@@ -20,9 +20,14 @@ Crud com sistema de busca e filtro  feito em PHP7 respeitando a PSR-4.
 
 # Composer/ Autoload :
 criar aquivo Json (já criado )
+
 terminal:  composer install
+
 obs: não está sendo utilizada nem uma biblioteca alem do Autoload 
-composer.json {
+
+composer.json 
+
+{
    
     "autoload": {
         "psr-4": {
