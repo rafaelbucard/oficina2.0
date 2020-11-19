@@ -1,8 +1,6 @@
 # Oficina2.0 :wrench:
  Sistema para oficina mecanica (cadastro de orçamento)
-
-
-
+ Autor: Rafael Buçard 
 
 
 Crud com sistema de busca e filtro  feito em PHP7 respeitando a PSR-4.  
