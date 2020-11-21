@@ -15,7 +15,7 @@
                 <input type="text" class="form-control" name="cliente">
             </div>
             <div class="form-group">
-                <label>preço</label>
+                <label>Preço</label>
                 <input type="number" class="form-control" name="price">
             </div>
             <div class="form-group">
@@ -27,12 +27,12 @@
                 <div>
                     <div class="form-check form-check-inline">
                         <label class="form-control">
-                            <input type="radio" name="ativo" value="s"> Concluído
+                            <input type="radio" name="completo" value="s"> Concluído
                         </label>
                     </div>
                     <div class="form-check form-check-inline">
                         <label class="form-control">
-                            <input type="radio" name="ativo" value="n" checked> Em andamento
+                            <input type="radio" name="completo" value="n" > Em andamento
                         </label>
                     </div>
                 </div>
