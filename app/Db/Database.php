@@ -5,7 +5,6 @@ use \PDOException;
 
 class Database{
 
-
     //local
     const HOST = 'localhost';
 
@@ -38,8 +37,21 @@ class Database{
             $this->connection->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
         } catch(PDOException $e) {
             die('error:'. $e->getMessage());
+        } 
+    }
+
+
+    // metodo de execução de qurry
+    public function execute($query,$params = []) {
+        try{
+            $statement = $this->connection->prepare($query);
+            $statement->execute($params);
+            return $statement;
+        } catch(PDOException $e) {
+            die('ERROR:'. $e->getMessage());
         }
     }
+
     // Método de inserir no banco de dados 
     //parametro array  /  retorna o id 
     public function insert($values) {
@@ -50,8 +62,25 @@ class Database{
         //pega os valores de acordo com o numero ee chaves
         $binds = array_pad([],count($fields),'?');
 
-        $query = 'INSERT INTO'.$this->table.' ('.implode(',',$fields).') VALUES ('.implode(',',$binds).')';
-        echo "<pre>";print_r($q); echo "</pre>"; exit;
+        $query = 'INSERT INTO `repair`'.$this->table.' ('.implode(',',$fields).') VALUES ('.implode(',',$binds).')';
+        
+        //chamada do metodo execute
+        $this->execute($query, array_values($values));
+
+        return $this ->connection->lastInsertId();
+     
+    }
+    
+    // metodo de select no banco de dados 
+    // retorna PDOStatiment
+    public function select($where = null, $order = null, $limit = null){
+        $where = strlen($where) ? 'WHERE '. $where : '';
+        $where = strlen($order) ? 'ORDER BY '. $order : '';
+        $where = strlen($limit) ? 'LIMIT '. $limit : '';
+        
+        $query = 'SELECT * FROM `repair` '.$where.' '.$order.' '.$limit.' ';
+
+        return $this->execute($query);
     }
    
 }

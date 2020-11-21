@@ -14,7 +14,7 @@
       <div class="container">
           <div class=" jumbotron bg-danger">
               <h1>Oficina 2.0</h1>
-              <p> CRUD ORÇAMENTO OFICINA 
+              <p> Lista de Orçamento 
 
           </div>
    

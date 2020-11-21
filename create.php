@@ -13,7 +13,8 @@ if(isset($_POST['vendedor'],$_POST['cliente'],$_POST['price'],$_POST['descricao'
     $obRepair->completed = $_POST['completo'];
     $obRepair->register();
 
-   // print_r($obRepair);
+    header('location: index.php?status=sucess');
+   
 }
 
 include __DIR__. '/includes/header.php';
