@@ -1,21 +1,3 @@
-<?php
-$result = '';
-foreach($repair as $rep) {
-    $result = '<tr>
-                    <tb>'. $rep->id.'</tb>
-                    <tb>'. $rep->namem.'</tb>
-                    <tb>'. $rep->namec.'</tb>
-                    <tb>'. $rep->desription.'</tb>
-                    <tb>'. $rep->price.'</tb>
-                    <tb>'. $rep->price.'</tb>
-                    
-    
-    
-    
-    
-                </tr>';
-}
-?>
 <main>
     <section>
         <a href="create.php">
@@ -24,7 +6,6 @@ foreach($repair as $rep) {
     </section>
     <section>
         <table class="table bg-light text-dark mt-3">
-            <thead>
                 <tr>
                     <th>ID</th>
                     <th>Mecânico</th>
@@ -32,15 +13,21 @@ foreach($repair as $rep) {
                     <th>Descrição</th>
                     <th>Preço</th>
                     <th>Status</th>
-                    <th>Data</th>
+                    <th>Data e Hora</th>
                     <th>Ações</th>
                 </tr>
-            </thead>
-            <tbody>
-            <?php
-            $result;
-            ?>
-            </tbody>
+                <?php foreach ($repair as $rep): ?>
+                <tr>
+                    <td><?=$rep->id;?></td>
+                    <td><?=$rep->namem;?></td>            
+                    <td><?=$rep->namec;?></td>
+                    <td><?=$rep->description;?></td>
+                    <td><?=$rep->price;?></td>
+                    <td><?=($rep->completed=='s'?'Concluído':'Em andamento');?></td>
+                    <td><?=$rep->date;?></td>
+                    <td></td>
+            </tr>
+            <?php endforeach; ?> 
         </table>
     </section>
 </main>
