@@ -24,7 +24,7 @@
                     <td><?=$rep->description;?></td>
                     <td><?=$rep->price;?></td>
                     <td><?=($rep->completed=='s'?'Concluído':'Em andamento');?></td>
-                    <td><?=$rep->date;?></td>
+                    <td><?=date('d/m/Y à\s H:i:s',strtotime($rep->date));?></td>
                     <td></td>
             </tr>
             <?php endforeach; ?> 
