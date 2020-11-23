@@ -9,7 +9,7 @@ class Repair {
 //identificador primário integer 
 public $id;
 
-// String vendedor
+// String mecanico 
 public $namem;
 
 //string cliente
@@ -27,16 +27,18 @@ public $date;
 // float preço
 public $price;
 
-//Cadastrando um novo orçamento 
+    /**
+  * Atualiza
+  * Metodo para Atualizar no banco de dados
+  * @param string $where
+  * @return  boolean    
+  */
 public function register(){
-
     //pegando hora e data do sistema 
     $this->date = date('Y-m-d H:i:s');
 
     // definindo tabela criando objeto DB
     $obDatabase = new Database();
-    //echo "<pre>"; print_r($obDatabase); echo "</pre>"; exit;
-
     $this->id = $obDatabase->insert([
         'namem' => $this->namem,
         'namec' => $this->namec,
@@ -45,30 +47,57 @@ public function register(){
         'price' => $this->price,
         'date' => $this->date
     ]);
-    //echo "<pre>";print_r($this); echo "</pre>"; exit;
+  
     return true;
 }
 
-//metodo para pegar listagem em banco de dados
-// retorna um arrey
+
+/**
+  * Atualiza
+  * Metodo para Atualizar no banco de dados
+  * @return  boolean    
+  */
+public function update() {
+return ( new Database())->updateRepair('id = '.$this->id,[
+    'namem' => $this->namem,
+    'namec' => $this->namec,
+    'description' => $this->desription,
+    'completed' => $this->completed,
+    'price' => $this->price,
+    'date' => $this->date
+]);
+}
+
+/**
+  * Deletar
+  * Metodo para Deletar do banco de dados
+  * @return  boolean    
+  */
+  public function delete() {
+    return ( new Database())->deleteRepair('id = '.$this->id);  
+
+  }
+
+/**
+  * Pegar
+  * Metodo para pegar listagem 
+  * @return  array  
+  */
 public static function getRepair($where = null, $order = null, $limit = null) {
     return(new Database ())->select($where,$order,$limit)->fetchAll(PDO::FETCH_CLASS,self::class);
 }
 
 
-//metodo que busca o reparo de acordo com o id
-//retorna uma unica posição
+/**
+  * Pegar para editar 
+  * Metodo para pegar uma posição no banco de dados
+  * @return  array  
+  */
 public static function getEdit($id) {
+
     return(new Database ())->execute("SELECT * FROM repair WHERE id = $id")->fetchObject(self::class);
 }
 
 }
 
 
-/**
-  * Ofcina2.0.
-  * 
-  * @param 
-  * @return      
-  * @author    Rafael Buçard
-  */

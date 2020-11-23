@@ -8,19 +8,19 @@
         <form method="post">
             <div class="form-group">
                 <label>Mecânico</label>
-                <input type="text" class="form-control" name="mecanico">
+                <input type="text" class="form-control" name="mecanico" value="<?=$obRepair->namem?>">
             </div>
             <div class="form-group">
                 <label>Cliente</label>
-                <input type="text" class="form-control" name="cliente">
+                <input type="text" class="form-control" name="cliente" value="<?=$obRepair->namec?>">
             </div>
             <div class="form-group">
                 <label>Preço</label>
-                <input type="text" class="form-control" name="price">
+                <input type="text" class="form-control" name="price" value="<?=$obRepair->price?>">
             </div>
             <div class="form-group">
                 <label>Descrição</label>
-                <textarea class="form-control" name="descricao" rows="5"></textarea>
+                <textarea class="form-control" name="descricao" rows="5" ><?=$obRepair->description?></textarea>
             </div>
             <div class="form-group">
                 <label>Status</label>
@@ -32,7 +32,7 @@
                     </div>
                     <div class="form-check form-check-inline">
                         <label class="form-control">
-                            <input type="radio" name="completo" value="n" > Em andamento
+                            <input type="radio" name="completo" value="n" <?=$obRepair->completed =='n'?'checked' :''?>> Em andamento
                         </label>
                     </div>
                 </div>

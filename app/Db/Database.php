@@ -25,21 +25,19 @@ class Database{
     
     //iniciando conecção ecom banco de dados 
     public function __construct() {
-       // $this->$table = $table;
+
         $this->setConection();
     }
 
     //montagem PDO
     private function setConection() {
         try {
-
             $this->connection = new PDO('mysql:host='.self::HOST.';dbname='.self::NAME,self::USER,self::PASS);    
             $this->connection->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
         } catch(PDOException $e) {
             die('error:'. $e->getMessage());
         } 
     }
-
 
     // metodo de execução de query
     public function execute($query,$params = []) {
@@ -52,8 +50,12 @@ class Database{
         }
     }
 
-    // Método de inserir no banco de dados 
-    //parametro array  /  retorna o id 
+     /**
+  * Inserir
+  * Metodo para inserir no banco de dados
+  * @param array $values
+  * @return int $id  
+  */
     public function insert($values) {
 
         //separa as chaves  do array para mntar querry
@@ -67,12 +69,14 @@ class Database{
         //chamada do metodo execute
         $this->execute($query, array_values($values));
 
-        return $this ->connection->lastInsertId();
-     
+        return $this ->connection->lastInsertId(); 
     }
-    
-    // metodo de select no banco de dados 
-    // retorna PDOStatiment
+
+    /**
+    * Selecinoar Todos
+    * Metodo para selecionar todos
+    * @return PDOStatiment
+    */
     public function select($where = null, $order = null, $limit = null){
         $where = strlen($where) ? 'WHERE '. $where : '';
         $where = strlen($order) ? 'ORDER BY '. $order : '';
@@ -81,6 +85,34 @@ class Database{
         $query = 'SELECT * FROM '.$this->table.' '.$where.' '.$order.' '.$limit.' ';
 
         return $this->execute($query);
+    }
+
+    /**
+  * Atualiza
+  * Metodo para Atualizar no banco de dados
+  * @param string $where
+  * @param array $values
+  * @return  boolean    
+  */
+    public function updateRepair($where, $values){
+        $fields = array_keys($values);
+
+        $query = 'UPDATE '.$this->table.' SET '.implode('=?,',$fields).'=? WHERE '.$where;
+      
+        $this->execute($query,array_values($values));
+        return true;
+    }
+
+      /**
+  * Atualiza
+  * Metodo para Atualizar no banco de dados
+  * @param string $where
+  * @return  boolean    
+  */
+    public function deleteRepair($where){
+        $query = 'DELETE FROM '.$this->table.' WHERE '.$where;
+        $this->execute($query);
+        return true;
     }
    
 }

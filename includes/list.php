@@ -1,4 +1,18 @@
+<?php
+$msg = '';
+if(isset($_GET['status'])){
+    switch($_GET['status']) {
+        case 'success':
+            $msg = '<div class="alert alert-success">Ação executada com sucesso</div>';
+        break;
+        case 'error':
+            $msg = '<div class="alert alert-danger">Erro ao executar ação</div>';
+        break;
+    }
+}
+?>
 <main>
+    <?=$msg;?>
     <section>
         <a href="create.php">
             <button class="btn btn-success">Novo Orçamento</button>
