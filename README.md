@@ -37,7 +37,7 @@ criar aquivo Json (já criado )
 
 terminal:  composer install
 
-obs: não está sendo utilizada nem uma biblioteca alem do Autoload 
+obs: não está sendo utilizada nem uma bibliotéca além do Autoload 
 
 composer.json 
 
@@ -49,3 +49,9 @@ composer.json
         }
     }
 }
+
+## Referências :
+PHP: Programando com Orientação a Objetos
+Autor: Pablo Dall'Oglio. Editora: Novatec. Ano 2018 (4ed).
+
+Consulta sobre pesquisas e filtros : https://www.youtube.com/wdevoficial
