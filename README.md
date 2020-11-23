@@ -49,3 +49,9 @@ composer.json
         }
     }
 }
+
+## Referências :
+PHP: Programando com Orientação a Objetos
+Autor: Pablo Dall'Oglio. Editora: Novatec. Ano 2018 (4ed).
+
+Consulta sobre pesquisas e filtros : https://www.youtube.com/wdevoficial
