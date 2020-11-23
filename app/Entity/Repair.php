@@ -34,7 +34,9 @@ public function register(){
     $this->date = date('Y-m-d H:i:s');
 
     // definindo tabela criando objeto DB
-    $obDatabase = new Database('repair');
+    $obDatabase = new Database();
+    //echo "<pre>"; print_r($obDatabase); echo "</pre>"; exit;
+
     $this->id = $obDatabase->insert([
         'namem' => $this->namem,
         'namec' => $this->namec,
@@ -50,7 +52,23 @@ public function register(){
 //metodo para pegar listagem em banco de dados
 // retorna um arrey
 public static function getRepair($where = null, $order = null, $limit = null) {
-    return(new Database ('repair'))->select($where,$order,$limit)->fetchAll(PDO::FETCH_CLASS,self::class);
+    return(new Database ())->select($where,$order,$limit)->fetchAll(PDO::FETCH_CLASS,self::class);
+}
+
+
+//metodo que busca o reparo de acordo com o id
+//retorna uma unica posição
+public static function getEdit($id) {
+    return(new Database ())->execute("SELECT * FROM repair WHERE id = $id")->fetchObject(self::class);
 }
 
 }
+
+
+/**
+  * Ofcina2.0.
+  * 
+  * @param 
+  * @return      
+  * @author    Rafael Buçard
+  */

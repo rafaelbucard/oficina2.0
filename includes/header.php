@@ -11,8 +11,8 @@
     <title>Oficina 2.0</title>
   </head>
   <body class="bg-dark text-light">
-      <div class="container">
-          <div class=" jumbotron bg-danger">
+      <div class="container ">
+          <div class=" jumbotron bg-primary ">
               <h1>Oficina 2.0</h1>
               <p> Lista de Orçamento 
 

@@ -18,14 +18,14 @@ class Database{
     const PASS = '';
 
     //nome da tabela
-    private $table;
+    private $table = 'repair';
 
     //PDO
     private $connection;
     
     //iniciando conecção ecom banco de dados 
-    public function __construct($table = null) {
-        $this->$table = $table;
+    public function __construct() {
+       // $this->$table = $table;
         $this->setConection();
     }
 
@@ -41,7 +41,7 @@ class Database{
     }
 
 
-    // metodo de execução de qurry
+    // metodo de execução de query
     public function execute($query,$params = []) {
         try{
             $statement = $this->connection->prepare($query);
@@ -62,7 +62,7 @@ class Database{
         //pega os valores de acordo com o numero ee chaves
         $binds = array_pad([],count($fields),'?');
 
-        $query = 'INSERT INTO `repair`'.$this->table.' ('.implode(',',$fields).') VALUES ('.implode(',',$binds).')';
+        $query = 'INSERT INTO '.$this->table.' ('.implode(',',$fields).') VALUES ('.implode(',',$binds).')';
         
         //chamada do metodo execute
         $this->execute($query, array_values($values));
@@ -78,7 +78,7 @@ class Database{
         $where = strlen($order) ? 'ORDER BY '. $order : '';
         $where = strlen($limit) ? 'LIMIT '. $limit : '';
         
-        $query = 'SELECT * FROM `repair` '.$where.' '.$order.' '.$limit.' ';
+        $query = 'SELECT * FROM '.$this->table.' '.$where.' '.$order.' '.$limit.' ';
 
         return $this->execute($query);
     }
