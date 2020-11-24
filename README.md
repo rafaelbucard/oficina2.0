@@ -6,7 +6,7 @@
 
 Crud OOP com sistema de busca e filtro  feito em PHP7 respeitando a PSR-4.  
  
- **(O Objetivo do Projeto é demonstrar habilidades com a linguagem PHP , integração com banco de dados MySQL, Bootstrap e gerenciador de dependências Composer, além de criar uma ferramenta usual para o dia dia de uma oficina mecanica.)**
+ **(O Objetivo do Projeto é demonstrar habilidades com a linguagem PHP , integração com banco de dados MySQL, Bootstrap e gerenciador de dependências Composer, além de criar uma ferramenta usual para o dia dia de uma oficina mecânica.)**
  
 ### Ferramentas:
 * PHP: 7.4.11
