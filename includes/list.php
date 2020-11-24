@@ -19,6 +19,20 @@ if(isset($_GET['status'])){
         </a>
     </section>
     <section>
+        <form method="get">
+            <div class="row my-4">
+                <div class="col">
+                    <label>Buscar por Mecânico</label>
+                    <input type="text" name="search" class="form-control" value="<?=$search?>">
+                </div>
+                <div class="col d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </div>
+            </div>
+
+        </form>
+    </section>
+    <section>
         <table class="table bg-light text-dark mt-3">
                 <tr>
                     <th>ID</th>
@@ -43,7 +57,7 @@ if(isset($_GET['status'])){
                         <a href="edit.php?id=<?=$rep->id;?>">
                         <button type="button" class="btn btn-primary">Editar&nbsp;</button>
                         </a>
-                        
+
                         <a href="delete.php?id=<?=$rep->id;?>" onclick="return confirm('Tem certeza que deseja excluir?')">
                         <button type="button" class="btn btn-danger mt-1" >Excluir</button>
                          </a>
