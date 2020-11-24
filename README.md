@@ -7,22 +7,22 @@
 Crud OOP com sistema de busca e filtro  feito em PHP7 respeitando a PSR-4.  
  
  **(O Objetivo do Projeto é demonstrar habilidades com a linguagem PHP , integração com banco de dados MySQL, Bootstrap e gerenciador de dependências Composer, além de criar uma ferramenta usual para o dia dia de uma oficina mecanica.)**
-# Ferramentas:
+###Ferramentas:
 * PHP: 7.4.11
 * MySQL
 * Composer
 * BootstrapCDN
-## Abrindo Localmente:
+### Abrindo Localmente:
 * Todo ambiente configurado com o Xampp
  LINK: https://www.apachefriends.org/pt_br/index.html  
  
    
- ## BootstrapCDN:
+ ### BootstrapCDN:
  
 LINK: https://getbootstrap.com.br/docs/4.1/getting-started/introduction/  
 
    
- ## Base de dados/Tabela:`repair`:
+ ### Base de dados/Tabela:`repair`:
  
  Versão do cliente de base de dados: libmysql - mysqlnd 7.4.11
 
@@ -30,7 +30,7 @@ LINK: https://getbootstrap.com.br/docs/4.1/getting-started/introduction/
 
 
   
-## Composer/ Autoload :
+### Composer/ Autoload :
 
 LINK: https://getcomposer.org/
 
@@ -52,7 +52,7 @@ composer.json
     }
 }
 
-## Referências :
+### Referências :
 PHP: Programando com Orientação a Objetos
 Autor: Pablo Dall'Oglio. Editora: Novatec. Ano 2018 (4ed).
 
