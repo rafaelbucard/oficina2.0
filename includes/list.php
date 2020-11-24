@@ -43,6 +43,7 @@ if(isset($_GET['status'])){
                         <a href="edit.php?id=<?=$rep->id;?>">
                         <button type="button" class="btn btn-primary">Editar&nbsp;</button>
                         </a>
+                        
                         <a href="delete.php?id=<?=$rep->id;?>" onclick="return confirm('Tem certeza que deseja excluir?')">
                         <button type="button" class="btn btn-danger mt-1" >Excluir</button>
                          </a>
