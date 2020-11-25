@@ -53,4 +53,13 @@ composer.json
     }
 }
 
+ ### Responsividade para Mobile:
+ 
+
+![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/mobile_cadastro.png)  
+
+![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/delete_id.png)  
+
+![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/home_table.png)  
+
 
