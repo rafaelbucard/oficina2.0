@@ -28,7 +28,7 @@ LINK: https://getbootstrap.com.br/docs/4.1/getting-started/introduction/
  Versão do cliente de base de dados: libmysql - mysqlnd 7.4.11
  Tipo de dados para a criação da tabela na imagem abaixo.
 
-![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/Tabela.png)  
+![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_redme/Tabela.png)  
 
 
   
@@ -57,12 +57,12 @@ composer.json
  ### Responsividade para Mobile:
  
 
-![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/mobile_cadastro.png)  
+![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_redme/delete_id.png)  
 
 
-![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/home_table.png)  
+![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_redme/mobile_cadastro.png)  
 
 
-![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/delete_id.png)  
+![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_redme/home_table.png)  
 
 
