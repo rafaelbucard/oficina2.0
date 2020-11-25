@@ -1,5 +1,5 @@
 # Oficina2.0 :wrench:
- Sistema para oficina mecanica (cadastro de orçamento)
+ Sistema para oficina mecânica (cadastro de orçamento)
  
  Autor: Rafael Buçard 
 
