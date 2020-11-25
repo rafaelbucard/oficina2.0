@@ -56,46 +56,45 @@ if(isset($_GET['status'])){
     <section class="d-flex">
         <form method="get" class="d-flex align-items-end" >
             <div class="row my-4">
-                <div class="col">
+                <div class="col ml-2">
                     <label>Buscar Mecânico</label>
                     <input type="text" name="search" class="form-control" value="<?=$search ?>">
                 </div>
                 <div class="col d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                    <button type="submit" class="btn btn-primary mt-1">Filtrar</button>
                 </div>
             </div>
         </form>
         <form method="get" class="d-flex align-items-end">
             <div class="row my-4">
-                <div class="col">
+                <div class="col ml-2">
                     <label>Buscar Cliente</label>
                     <input type="text" name="searchClient" class="form-control" value="<?=$searchClient ?>">
                  </div>
                 <div class="col d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                    <button type="submit" class="btn btn-primary mt-1">Filtrar</button>
                 </div>
             </div>
         </form>
         <form method="get" class="d-flex align-items-end">
             <div class="row my-4">
-                <div class="col">
+                <div class="col ml-2">
                     <label>Por data</label>
                     <select name="date" class="form-control">
                         <?php foreach ($repair as $rep): ?>
                             <option value="<?=substr(date('Y-m-d H:i:s',strtotime($rep->date)), 0, 10);?>">
                                     <?=substr(date('Y-m-d H:i:s',strtotime($rep->date)), 0, 10);?></option>
                         <?php endforeach; ?>
-
                     </select>
                  </div>
                 <div class="col d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary">Filtrar</button>
+                    <button type="submit" class="btn btn-primary mt-1">Filtrar</button>
                 </div>
             </div>
         </form>
     </section>
     <section>
-        <table class="table bg-light text-dark mt-3">
+        <table class="table bg-light text-dark table-responsive mt-3">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -114,6 +113,3 @@ if(isset($_GET['status'])){
         </table>
     </section>
 </main>
-
-
-

@@ -10,6 +10,7 @@ if(!isset($_GET['id']) or !is_numeric($_GET['id'])) {
     header('location: index.php?status=error');
     exit;
 }
+
 $ide = $_GET['id'];
 $obRepair = Repair::getEdit($ide);
 
