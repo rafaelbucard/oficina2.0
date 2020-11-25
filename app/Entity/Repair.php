@@ -28,6 +28,7 @@ public $price;
   * @return  boolean    
   */
 public function register(){
+
     //pegando hora e data do sistema 
     $this->date = date('Y-m-d H:i:s');
 
@@ -44,14 +45,13 @@ public function register(){
   
     return true;
 }
-
-
 /**
   * Atualiza
   * Metodo para Atualizar no banco de dados
   * @return  boolean    
   */
 public function update() {
+
     return ( new Database('repair'))->updateRepair('id = '.$this->id,[
           'namem' => $this->namem,
           'namec' => $this->namec,
@@ -61,17 +61,16 @@ public function update() {
           'date' => $this->date
   ]);
 }
-
 /**
   * Deletar
   * Metodo para Deletar do banco de dados
   * @return  boolean    
   */
 public function delete() {
+
     return ( new Database('repair'))->deleteRepair('id = '.$this->id);  
 
   }
-
 /**
   * Pegar
   * Metodo para pegar listagem 
@@ -81,8 +80,6 @@ public static function getRepair($where = null, $order = null, $limit = null) {
     return(new Database ('repair'))->select($where,$order,$limit)
     ->fetchAll(PDO::FETCH_CLASS,self::class);
 }
-
-
 /**
   * Pegar para editar 
   * Metodo para pegar uma posição no banco de dados
@@ -90,9 +87,9 @@ public static function getRepair($where = null, $order = null, $limit = null) {
   */
 public static function getEdit($id) {
 
-    return(new Database ())->execute("SELECT * FROM repair WHERE id = $id")->fetchObject(self::class);
+    return(new Database ())->execute("SELECT * FROM repair WHERE id = $id")
+    ->fetchObject(self::class);
 }
-
 /**
   * Para buscar 
   * Metodo para pegar uma posição no banco de dados
@@ -101,7 +98,8 @@ public static function getEdit($id) {
 public static function getSearch($where){ 
 
   $query = 'SELECT * FROM repair WHERE '.$where; 
-  return(new Database ('repair'))->execute($query)->fetchAll(PDO::FETCH_CLASS,self::class);;
+  return(new Database ('repair'))->execute($query)
+  ->fetchAll(PDO::FETCH_CLASS,self::class);;
   
 }
 
