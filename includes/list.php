@@ -56,7 +56,7 @@ if(isset($_GET['status'])){
     <section class="d-flex">
         <form method="get" class="d-flex align-items-end" >
             <div class="row my-4">
-                <div class="col ml-2">
+                <div class="col ">
                     <label>Buscar Mecânico</label>
                     <input type="text" name="search" class="form-control" value="<?=$search ?>">
                 </div>
@@ -79,11 +79,11 @@ if(isset($_GET['status'])){
         <form method="get" class="d-flex align-items-end">
             <div class="row my-4">
                 <div class="col ml-2">
-                    <label>Por data</label>
+                    <label>Por Data</label>
                     <select name="date" class="form-control">
                         <?php foreach ($repair as $rep): ?>
                             <option value="<?=substr(date('Y-m-d H:i:s',strtotime($rep->date)), 0, 10);?>">
-                                    <?=substr(date('Y-m-d H:i:s',strtotime($rep->date)), 0, 10);?></option>
+                                    <?=substr(date('d/m/Y H:i:s',strtotime($rep->date)), 0, 10);?></option>
                         <?php endforeach; ?>
                     </select>
                  </div>
