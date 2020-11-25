@@ -23,7 +23,7 @@ if(isset($_POST['mecanico'],$_POST['cliente'],$_POST['price'],$_POST['descricao'
     $obRepair->namem = $_POST['mecanico'];
     $obRepair->namec = $_POST['cliente'];
     $obRepair->price = $_POST['price'];
-    $obRepair->desription = $_POST['descricao'];
+    $obRepair->description = $_POST['descricao'];
     $obRepair->completed = $_POST['completo'];
     $obRepair->update();
 

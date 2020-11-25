@@ -8,22 +8,16 @@ class Repair {
 
 //identificador primário integer 
 public $id;
-
 // String mecanico 
 public $namem;
-
 //string cliente
 public $namec;
-
 //text string descrição
-public $desription;
-
+public $description;
 //string : 's' ou 'n'
 public $completed;
-
 //data e hora string 
 public $date;
-
 // float preço
 public $price;
 
@@ -38,11 +32,11 @@ public function register(){
     $this->date = date('Y-m-d H:i:s');
 
     // definindo tabela criando objeto DB
-    $obDatabase = new Database();
+    $obDatabase = new Database('repair');
     $this->id = $obDatabase->insert([
         'namem' => $this->namem,
         'namec' => $this->namec,
-        'description' => $this->desription,
+        'description' => $this->description,
         'completed' => $this->completed,
         'price' => $this->price,
         'date' => $this->date
@@ -58,14 +52,14 @@ public function register(){
   * @return  boolean    
   */
 public function update() {
-return ( new Database())->updateRepair('id = '.$this->id,[
-    'namem' => $this->namem,
-    'namec' => $this->namec,
-    'description' => $this->desription,
-    'completed' => $this->completed,
-    'price' => $this->price,
-    'date' => $this->date
-]);
+    return ( new Database('repair'))->updateRepair('id = '.$this->id,[
+          'namem' => $this->namem,
+          'namec' => $this->namec,
+          'description' => $this->description,
+          'completed' => $this->completed,
+          'price' => $this->price,
+          'date' => $this->date
+  ]);
 }
 
 /**
@@ -73,8 +67,8 @@ return ( new Database())->updateRepair('id = '.$this->id,[
   * Metodo para Deletar do banco de dados
   * @return  boolean    
   */
-  public function delete() {
-    return ( new Database())->deleteRepair('id = '.$this->id);  
+public function delete() {
+    return ( new Database('repair'))->deleteRepair('id = '.$this->id);  
 
   }
 
@@ -84,7 +78,8 @@ return ( new Database())->updateRepair('id = '.$this->id,[
   * @return  array  
   */
 public static function getRepair($where = null, $order = null, $limit = null) {
-    return(new Database ())->select($where,$order,$limit)->fetchAll(PDO::FETCH_CLASS,self::class);
+    return(new Database ('repair'))->select($where,$order,$limit)
+    ->fetchAll(PDO::FETCH_CLASS,self::class);
 }
 
 
@@ -98,6 +93,17 @@ public static function getEdit($id) {
     return(new Database ())->execute("SELECT * FROM repair WHERE id = $id")->fetchObject(self::class);
 }
 
+/**
+  * Para buscar 
+  * Metodo para pegar uma posição no banco de dados
+  * @return  array  
+  */
+public static function getSearch($where){ 
+
+  $query = 'SELECT * FROM repair WHERE '.$where; 
+  return(new Database ('repair'))->execute($query)->fetchAll(PDO::FETCH_CLASS,self::class);;
+  
 }
 
+}
 

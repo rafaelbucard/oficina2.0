@@ -18,16 +18,16 @@ class Database{
     const PASS = '';
 
     //nome da tabela
-    private $table = 'repair';
+    private $table;
 
     //PDO
     private $connection;
     
     //iniciando conecção ecom banco de dados 
-    public function __construct() {
-
+    public function __construct($table = null){
+        $this->table = $table;
         $this->setConection();
-    }
+      }
 
     //montagem PDO
     private function setConection() {
@@ -39,16 +39,21 @@ class Database{
         } 
     }
 
-    // metodo de execução de query
-    public function execute($query,$params = []) {
-        try{
-            $statement = $this->connection->prepare($query);
-            $statement->execute($params);
-            return $statement;
-        } catch(PDOException $e) {
-            die('ERROR:'. $e->getMessage());
-        }
+    /**
+   * Método de execução da query
+   * @param  string $query
+   * @param  array  $params
+   * @return PDOStatement
+   */
+  public function execute($query,$params = []){
+    try{
+      $statement = $this->connection->prepare($query);
+      $statement->execute($params);
+      return $statement;
+    }catch(PDOException $e){
+      die('ERROR: '.$e->getMessage());
     }
+  }
 
      /**
   * Inserir
@@ -58,10 +63,8 @@ class Database{
   */
     public function insert($values) {
 
-        //separa as chaves  do array para mntar querry
+        //separa as chaves  do array para motar querry
         $fields = array_keys($values);
-
-        //pega os valores de acordo com o numero ee chaves
         $binds = array_pad([],count($fields),'?');
 
         $query = 'INSERT INTO '.$this->table.' ('.implode(',',$fields).') VALUES ('.implode(',',$binds).')';
@@ -77,12 +80,12 @@ class Database{
     * Metodo para selecionar todos
     * @return PDOStatiment
     */
-    public function select($where = null, $order = null, $limit = null){
+    public function select($where = null, $order = null, $limit = null, $fields ='*'){
         $where = strlen($where) ? 'WHERE '. $where : '';
         $where = strlen($order) ? 'ORDER BY '. $order : '';
         $where = strlen($limit) ? 'LIMIT '. $limit : '';
         
-        $query = 'SELECT * FROM '.$this->table.' '.$where.' '.$order.' '.$limit.' ';
+        $query = 'SELECT '.$fields.' FROM '.$this->table.' '.$where.' '.$order.' '.$limit.' ';
 
         return $this->execute($query);
     }
