@@ -60,6 +60,6 @@ composer.json
 
 ![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/delete_id.png)  
 
-![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/home_table.png)  
+![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/mobile_create.png)  
 
 
