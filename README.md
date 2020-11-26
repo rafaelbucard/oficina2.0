@@ -35,7 +35,7 @@ LINK: https://getbootstrap.com.br/docs/4.1/getting-started/introduction/
 
  *img:*
  
-![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_redme/Tabela.png)  
+![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_readme/Tabela.png)  
 
 
   
@@ -65,12 +65,12 @@ composer.json
  ### Responsividade para Mobile:
  
 
-![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_redme/delete_id.png)  
+![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_readme/delete_id.png)  
 
 
-![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_redme/mobile_cadastro.png)  
+![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_readme/mobile_cadastro.png)  
 
 
-![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_redme/home_table.png)  
+![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_readme/home_table.png)  
 
 
