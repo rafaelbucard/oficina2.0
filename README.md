@@ -23,7 +23,7 @@ Crud OOP com sistema de busca e filtro  feito em PHP7 respeitando a PSR-4.
 LINK: https://getbootstrap.com.br/docs/4.1/getting-started/introduction/  
 
    
- ### Base de dados:`mechanic`/Tabela:`repair`:
+ ### Base de dados: mechanic/Tabela: repair:
  
  Versão do cliente de base de dados: libmysql - mysqlnd 7.4.11
  Tipo de dados para a criação da tabela na imagem abaixo.
