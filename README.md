@@ -62,6 +62,11 @@ composer.json
     }
 }``
 
+ ### Desktop:
+ 
+ ![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_readme/oficinahome.png)  
+
+
  ### Responsividade para Mobile:
  
 
