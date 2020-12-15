@@ -18,7 +18,7 @@ if(!$obRepair instanceof Repair){
     header('location: index.php?status=error');
     exit;
 }
-//echo "<pre>"; print_r($obRepair); echo "</pre>"; exit;
+
 //validando formulário POST
 if(isset($_POST['delete'])){
 
