@@ -5,8 +5,7 @@
   * @author    Rafael Buçard
   */
 require __DIR__. '/vendor/autoload.php';
-use\App\Entity\Repair;
-
+use \App\Entity\Repair;
 //Recebendo valores de Buscas 
 $search = filter_input(INPUT_GET,'search', FILTER_SANITIZE_STRING);
 $searchClient = filter_input(INPUT_GET,'searchClient', FILTER_SANITIZE_STRING);
@@ -57,4 +56,5 @@ else {
 
 include __DIR__. '/includes/header.php';
 include __DIR__. '/includes/list.php';
+//echo phpinfo();
 include __DIR__. '/includes/footer.php';
