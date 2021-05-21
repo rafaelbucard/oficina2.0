@@ -30,6 +30,11 @@ LINK: https://getbootstrap.com.br/docs/4.1/getting-started/introduction/
  
  *SQL:*
  
+ Crie um banco chamado: mechanic.
+ 
+ Depois execute :
+ 
+ 
 `` CREATE TABLE `mechanic`.`repair` ( `id` INT NOT NULL AUTO_INCREMENT , `namem` VARCHAR(100) NOT NULL , `namec` VARCHAR(100) NOT NULL , `description` TEXT NOT NULL , `completed` ENUM('s', 'n') NOT NULL , `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `price` VARCHAR(100) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB; 
  ``
 
