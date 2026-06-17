@@ -1,5 +1,12 @@
 {
-   
+    "name": "rafaelbucard/oficina2.0",
+    "description": "Sistema para oficina mecânica (cadastro de orçamentos) - CRUD OOP em PHP com PostgreSQL.",
+    "type": "project",
+    "require": {
+        "php": ">=8.3",
+        "ext-pdo": "*",
+        "ext-pdo_pgsql": "*"
+    },
     "autoload": {
         "psr-4": {
             "App\\": "app/"

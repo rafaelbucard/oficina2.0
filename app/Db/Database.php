@@ -1,109 +1,109 @@
 <?php
+
 namespace App\Db;
-use \PDO;
-use \PDOException;
 
-class Database{
+use PDO;
+use PDOException;
 
-    //local
-    const HOST = 'localhost';
-    //nome do banco de dados 
-    const NAME = 'mechanic';
-    //usuario
-    const USER = 'root';
-    //senha
-    const PASS = '';
-    //nome da tabela
-    private $table;
-    //PDO
-    private $connection;
+class Database
+{
+    /** Nome da tabela */
+    private ?string $table;
 
-    //iniciando conecção ecom banco de dados
-    public function __construct($table = null){
+    /** Conexão PDO */
+    private PDO $connection;
 
+    public function __construct(?string $table = null)
+    {
         $this->table = $table;
-        $this->setConection();
-      }
+        $this->setConnection();
+    }
 
-    //montagem PDO
-    private function setConection() {
+    /**
+     * Monta a conexão PDO com PostgreSQL lendo as variáveis de ambiente
+     * definidas no container (docker-compose). Os fallbacks apontam para
+     * o serviço "db" do Docker.
+     */
+    private function setConnection(): void
+    {
+        $host = getenv('DB_HOST') ?: 'db';
+        $port = getenv('DB_PORT') ?: '5432';
+        $name = getenv('DB_NAME') ?: 'mechanic';
+        $user = getenv('DB_USER') ?: 'postgres';
+        $pass = getenv('DB_PASS') ?: 'postgres';
 
         try {
-            $this->connection = new PDO('mysql:host='.self::HOST.';dbname='.self::NAME,self::USER,self::PASS);    
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-        } catch(PDOException $e) {
-            die('error:'. $e->getMessage());
-        } 
+            $dsn = 'pgsql:host=' . $host . ';port=' . $port . ';dbname=' . $name;
+            $this->connection = new PDO($dsn, $user, $pass);
+            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            die('error: ' . $e->getMessage());
+        }
     }
+
     /**
-   * Método de execução da query
-   * @param  string $query
-   * @param  array  $params
-   * @return PDOStatement
-   */
-  public function execute($query,$params = []){
-
-    try{
-      $statement = $this->connection->prepare($query);
-      $statement->execute($params);
-      return $statement;
-    }catch(PDOException $e){
-      die('ERROR: '.$e->getMessage());
+     * Executa uma query com parâmetros (prepared statement)
+     */
+    public function execute(string $query, array $params = []): \PDOStatement
+    {
+        try {
+            $statement = $this->connection->prepare($query);
+            $statement->execute($params);
+            return $statement;
+        } catch (PDOException $e) {
+            die('ERROR: ' . $e->getMessage());
+        }
     }
-  }
-     /**
-  * Inserir
-  * Metodo para inserir no banco de dados
-  * @param array $values
-  * @return int $id  
-  */
-    public function insert($values) {
 
-        //separa as chaves  do array para motar querry
+    /**
+     * Insere um registro e retorna o id gerado (usa RETURNING do PostgreSQL)
+     */
+    public function insert(array $values): int
+    {
         $fields = array_keys($values);
-        $binds = array_pad([],count($fields),'?');
-        $query = 'INSERT INTO '.$this->table.' ('.implode(',',$fields).') VALUES ('.implode(',',$binds).')';
-        //chamada do metodo execute
-        $this->execute($query, array_values($values));
-        return $this ->connection->lastInsertId(); 
-    }
-    /**
-    * Selecinoar Todos
-    * Metodo para selecionar todos
-    * @return PDOStatiment
-    */
-    public function select($where = null, $order = null, $limit = null, $fields ='*'){
+        $binds = array_pad([], count($fields), '?');
 
-        $where = strlen($where) ? 'WHERE '. $where : '';
-        $where = strlen($order) ? 'ORDER BY '. $order : '';
-        $where = strlen($limit) ? 'LIMIT '. $limit : '';
-        $query = 'SELECT '.$fields.' FROM '.$this->table.' '.$where.' '.$order.' '.$limit.' ';
+        $query = 'INSERT INTO ' . $this->table . ' (' . implode(',', $fields) . ') '
+            . 'VALUES (' . implode(',', $binds) . ') RETURNING id';
+
+        $statement = $this->execute($query, array_values($values));
+
+        return (int) $statement->fetchColumn();
+    }
+
+    /**
+     * Seleciona registros da tabela
+     */
+    public function select(?string $where = null, ?string $order = null, ?string $limit = null, string $fields = '*'): \PDOStatement
+    {
+        $where = strlen((string) $where) ? 'WHERE ' . $where : '';
+        $order = strlen((string) $order) ? 'ORDER BY ' . $order : '';
+        $limit = strlen((string) $limit) ? 'LIMIT ' . $limit : '';
+
+        $query = 'SELECT ' . $fields . ' FROM ' . $this->table . ' ' . $where . ' ' . $order . ' ' . $limit;
+
         return $this->execute($query);
     }
-    /**
-  * Atualiza
-  * Metodo para Atualizar no banco de dados
-  * @param string $where
-  * @param array $values
-  * @return  boolean    
-  */
-    public function updateRepair($where, $values){
 
+    /**
+     * Atualiza registros que atendem à condição
+     */
+    public function updateRepair(string $where, array $values): bool
+    {
         $fields = array_keys($values);
-        $query = 'UPDATE '.$this->table.' SET '.implode('=?,',$fields).'=? WHERE '.$where;
-        $this->execute($query,array_values($values));
+        $query = 'UPDATE ' . $this->table . ' SET ' . implode('=?,', $fields) . '=? WHERE ' . $where;
+        $this->execute($query, array_values($values));
         return true;
     }
-      /**
-  * Atualiza
-  * Metodo para Atualizar no banco de dados
-  * @param string $where
-  * @return  boolean    
-  */
-    public function deleteRepair($where){
 
-        $query = 'DELETE FROM '.$this->table.' WHERE '.$where;
+    /**
+     * Remove registros que atendem à condição
+     */
+    public function deleteRepair(string $where): bool
+    {
+        $query = 'DELETE FROM ' . $this->table . ' WHERE ' . $where;
         $this->execute($query);
         return true;
-    }  
+    }
 }

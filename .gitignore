@@ -1,0 +1,5 @@
+# Dependências do Composer
+/vendor
+
+# Documentação interna (não versionada)
+/docs

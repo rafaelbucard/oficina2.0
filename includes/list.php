@@ -5,14 +5,15 @@ use App\Entity\Repair;
 $result = '';
 rsort($repair);
 foreach($repair as $rep){
+  $esc = fn($v) => htmlspecialchars((string) $v, ENT_QUOTES, 'UTF-8');
   $result .= 
   '<tr>
-         <td>'.$rep->id.'</td>
-         <td>'.$rep->namem.'</td>
-         <td>'.$rep->namec.'</td>
-         <td>'.$rep->description.'</td>
-         <td>'.$rep->price.'</td>
-         <td>'.($rep->completed == 's' ? 'Conclúdo' : 'Em Andamento').'</td>
+         <td>'.$esc($rep->id).'</td>
+         <td>'.$esc($rep->namem).'</td>
+         <td>'.$esc($rep->namec).'</td>
+         <td>'.$esc($rep->description).'</td>
+         <td>'.$esc($rep->price).'</td>
+         <td>'.($rep->completed == 's' ? 'Concluído' : 'Em Andamento').'</td>
          <td>'.date('d/m/Y à\s H:i:s',strtotime($rep->date)).'</td>
          <td class="d-flex  ">
             <a href="edit.php?id='.$rep->id.'">
@@ -58,7 +59,7 @@ if(isset($_GET['status'])){
             <div class="row my-4">
                 <div class="col ">
                     <label>Buscar Mecânico</label>
-                    <input type="text" name="search" class="form-control" value="<?=$search ?>">
+                    <input type="text" name="search" class="form-control" value="<?=htmlspecialchars($search, ENT_QUOTES, 'UTF-8') ?>">
                 </div>
                 <div class="col d-flex align-items-end">
                     <button type="submit" class="btn btn-primary mt-1">Filtrar</button>
@@ -69,7 +70,7 @@ if(isset($_GET['status'])){
             <div class="row my-4">
                 <div class="col ml-2">
                     <label>Buscar Cliente</label>
-                    <input type="text" name="searchClient" class="form-control" value="<?=$searchClient ?>">
+                    <input type="text" name="searchClient" class="form-control" value="<?=htmlspecialchars($searchClient, ENT_QUOTES, 'UTF-8') ?>">
                  </div>
                 <div class="col d-flex align-items-end">
                     <button type="submit" class="btn btn-primary mt-1">Filtrar</button>

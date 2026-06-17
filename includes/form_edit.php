@@ -8,19 +8,19 @@
         <form method="post">
             <div class="form-group">
                 <label>Mecânico</label>
-                <input type="text" class="form-control" name="mecanico" value="<?=$obRepair->namem?>">
+                <input type="text" class="form-control" name="mecanico" value="<?=htmlspecialchars((string) $obRepair->namem, ENT_QUOTES, 'UTF-8')?>">
             </div>
             <div class="form-group">
                 <label>Cliente</label>
-                <input type="text" class="form-control" name="cliente" value="<?=$obRepair->namec?>">
+                <input type="text" class="form-control" name="cliente" value="<?=htmlspecialchars((string) $obRepair->namec, ENT_QUOTES, 'UTF-8')?>">
             </div>
             <div class="form-group">
                 <label>Preço</label>
-                <input type="text" class="form-control" name="price" value="<?=$obRepair->price?>">
+                <input type="text" class="form-control" name="price" value="<?=htmlspecialchars((string) $obRepair->price, ENT_QUOTES, 'UTF-8')?>">
             </div>
             <div class="form-group">
                 <label>Descrição</label>
-                <textarea class="form-control" name="descricao" rows="5" ><?=$obRepair->description?></textarea>
+                <textarea class="form-control" name="descricao" rows="5" ><?=htmlspecialchars((string) $obRepair->description, ENT_QUOTES, 'UTF-8')?></textarea>
             </div>
             <div class="form-group">
                 <label>Status</label>

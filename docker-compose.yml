@@ -1,0 +1,41 @@
+services:
+  app:
+    build: .
+    container_name: oficina_app
+    ports:
+      - "8000:80"
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_NAME: mechanic
+      DB_USER: postgres
+      DB_PASS: postgres
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      # Código montado para edição em tempo real
+      - .:/var/www/html
+      # Preserva o vendor/ gerado no build (não deixa o bind-mount sobrescrever)
+      - /var/www/html/vendor
+
+  db:
+    image: postgres:16
+    container_name: oficina_db
+    environment:
+      POSTGRES_DB: mechanic
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d mechanic"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  dbdata:

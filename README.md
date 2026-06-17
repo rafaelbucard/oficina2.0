@@ -9,13 +9,35 @@ Crud OOP com sistema de busca e filtro  feito em PHP7 respeitando a PSR-4.
  **(O Objetivo do Projeto é demonstrar habilidades com a linguagem PHP , integração com banco de dados MySQL, Bootstrap e gerenciador de dependências Composer, para criação de um crud orientado a objeto simples, rápido e visualmente adequado e responsivo, além de criar uma ferramenta usual para o dia dia de uma oficina mecânica.)**
  
 ### Ferramentas:
-* PHP: 7.4.11
-* MySQL
+* PHP: 8.3
+* PostgreSQL 16
 * Composer
 * BootstrapCDN
-### Abrindo Localmente:
-* Todo ambiente configurado com o Xampp
- LINK: https://www.apachefriends.org/pt_br/index.html  
+* Docker + Docker Compose
+
+### Executando (exclusivamente via Docker):
+
+O projeto roda **somente** com Docker — não é necessário instalar PHP ou PostgreSQL na máquina.
+
+```bash
+docker compose up --build
+```
+
+Depois acesse: **http://localhost:8000**
+
+A tabela `repair` é criada automaticamente na primeira subida (via `docker/init.sql`).
+
+Para parar e remover os containers (mantendo os dados):
+
+```bash
+docker compose down
+```
+
+Para remover também o banco de dados (volume):
+
+```bash
+docker compose down -v
+```
  
    
  ### BootstrapCDN:
@@ -25,18 +47,23 @@ LINK: https://getbootstrap.com.br/docs/4.1/getting-started/introduction/
    
  ### Base de dados: mechanic/Tabela: repair:
  
- Versão do cliente de base de dados: libmysql - mysqlnd 7.4.11
- Tipo de dados para a criação da tabela na imagem abaixo.
+ Banco de dados: **PostgreSQL**
+
+ *SQL:* (executado automaticamente pelo Docker via `docker/init.sql` — não precisa rodar manualmente)
  
- *SQL:*
- 
- Crie um banco chamado: mechanic.
- 
- Depois execute :
- 
- 
-`` CREATE TABLE `mechanic`.`repair` ( `id` INT NOT NULL AUTO_INCREMENT , `namem` VARCHAR(100) NOT NULL , `namec` VARCHAR(100) NOT NULL , `description` TEXT NOT NULL , `completed` ENUM('s', 'n') NOT NULL , `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , `price` VARCHAR(100) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB; 
- ``
+```sql
+CREATE TABLE repair (
+    id          SERIAL PRIMARY KEY,
+    namem       VARCHAR(100) NOT NULL,
+    namec       VARCHAR(100) NOT NULL,
+    description  TEXT NOT NULL,
+    completed   CHAR(1) NOT NULL CHECK (completed IN ('s', 'n')),
+    date        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    price       VARCHAR(100) NOT NULL
+);
+```
+
+> Observação: o PostgreSQL não possui `ENUM` inline como o MySQL; aqui usamos `CHAR(1)` com uma restrição `CHECK`. O `AUTO_INCREMENT` é substituído por `SERIAL`.
 
  *img:*
  
@@ -49,12 +76,9 @@ LINK: https://getbootstrap.com.br/docs/4.1/getting-started/introduction/
 
 LINK: https://getcomposer.org/
 
+O `composer install` é executado **dentro do build do Docker** (ver `Dockerfile`), gerando o autoload PSR-4. Não é necessário rodar Composer manualmente.
 
-criar aquivo Json (já criado )
-
-terminal:  composer install
-
-obs: não está sendo utilizada nem uma bibliotéca além do Autoload 
+obs: não está sendo utilizada nenhuma biblioteca além do Autoload.
 
 composer.json 
 ``

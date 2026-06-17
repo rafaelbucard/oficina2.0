@@ -1,38 +1,38 @@
 <?php
 
 namespace App\Entity;
+
 use App\Db\Database;
-use \PDO;
+use PDO;
 
-class Repair {
-
-    //identificador primário integer 
+class Repair
+{
+    /** Identificador primário */
     public $id;
-    // String mecanico 
+
+    /** Nome do mecânico */
     public $namem;
-    //string cliente
+
+    /** Nome do cliente */
     public $namec;
-    //text string descrição
+
+    /** Descrição do serviço */
     public $description;
-    //string : 's' ou 'n'
+
+    /** Status: 's' (concluído) ou 'n' (em andamento) */
     public $completed;
-    //data e hora string 
+
+    /** Data e hora */
     public $date;
-    // float preço
+
+    /** Preço */
     public $price;
 
-        /**
-      * Atualiza
-      * Metodo para Atualizar no banco de dados
-      * @param string $where
-      * @return  boolean    
-      */
-    public function register(){
-
-        //pegando hora e data do sistema 
+    /** Insere o orçamento no banco de dados */
+    public function register(): bool
+    {
         $this->date = date('Y-m-d H:i:s');
 
-        // definindo tabela criando objeto DB
         $obDatabase = new Database('repair');
         $this->id = $obDatabase->insert([
             'namem' => $this->namem,
@@ -40,66 +40,60 @@ class Repair {
             'description' => $this->description,
             'completed' => $this->completed,
             'price' => $this->price,
-            'date' => $this->date
+            'date' => $this->date,
         ]);
-      
+
         return true;
     }
-    /**
-      * Atualiza
-      * Metodo para Atualizar no banco de dados
-      * @return  boolean    
-      */
-    public function update() {
 
-        return ( new Database('repair'))->updateRepair('id = '.$this->id,[
-              'namem' => $this->namem,
-              'namec' => $this->namec,
-              'description' => $this->description,
-              'completed' => $this->completed,
-              'price' => $this->price,
-              'date' => $this->date
-      ]);
+    /** Atualiza o orçamento no banco de dados */
+    public function update(): bool
+    {
+        return (new Database('repair'))->updateRepair('id = ' . (int) $this->id, [
+            'namem' => $this->namem,
+            'namec' => $this->namec,
+            'description' => $this->description,
+            'completed' => $this->completed,
+            'price' => $this->price,
+            'date' => $this->date,
+        ]);
     }
-    /**
-      * Deletar
-      * Metodo para Deletar do banco de dados
-      * @return  boolean    
-      */
-    public function delete() {
 
-        return ( new Database('repair'))->deleteRepair('id = '.$this->id);  
-
-      }
-    /**
-      * Pegar
-      * Metodo para pegar listagem 
-      * @return  array  
-      */
-    public static function getRepair($where = null, $order = null, $limit = null) {
-        return(new Database ('repair'))->select($where,$order,$limit)
-        ->fetchAll(PDO::FETCH_CLASS,self::class);
+    /** Remove o orçamento do banco de dados */
+    public function delete(): bool
+    {
+        return (new Database('repair'))->deleteRepair('id = ' . (int) $this->id);
     }
-    /**
-      * Pegar para editar 
-      * Metodo para pegar uma posição no banco de dados
-      * @return  array  
-      */
-    public static function getEdit($id) {
 
-        return(new Database ())->execute("SELECT * FROM repair WHERE id = $id")
-        ->fetchObject(self::class);
+    /** Retorna a listagem de orçamentos */
+    public static function getRepair(?string $where = null, ?string $order = null, ?string $limit = null): array
+    {
+        return (new Database('repair'))
+            ->select($where, $order, $limit)
+            ->fetchAll(PDO::FETCH_CLASS, self::class);
     }
-    /**
-      * Para buscar 
-      * Metodo para pegar uma posição no banco de dados
-      * @return  array  
-      */
-    public static function getSearch($where){ 
 
-      $query = 'SELECT * FROM repair WHERE '.$where; 
-      return(new Database ('repair'))->execute($query)
-      ->fetchAll(PDO::FETCH_CLASS,self::class);;
-      
-  }
+    /** Retorna um único orçamento pelo id (prepared statement) */
+    public static function getEdit(int $id): ?Repair
+    {
+        $repair = (new Database('repair'))
+            ->execute('SELECT * FROM repair WHERE id = ?', [$id])
+            ->fetchObject(self::class);
+
+        return $repair instanceof Repair ? $repair : null;
+    }
+
+    /**
+     * Busca orçamentos por uma cláusula com parâmetros vinculados.
+     *
+     * @param string $where  Cláusula com placeholders (ex.: 'namem ILIKE ?')
+     * @param array  $params Valores vinculados aos placeholders
+     */
+    public static function getSearch(string $where, array $params = []): array
+    {
+        $query = 'SELECT * FROM repair WHERE ' . $where;
+        return (new Database('repair'))
+            ->execute($query, $params)
+            ->fetchAll(PDO::FETCH_CLASS, self::class);
+    }
 }
