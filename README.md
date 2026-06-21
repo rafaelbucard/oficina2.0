@@ -1,110 +1,87 @@
-# Oficina2.0 :wrench: :wrench:
- Sistema para oficina mecânica (cadastro de orçamento)
- 
- Autor: Rafael Buçard 
+# Oficina 2.0 :wrench:
 
+Sistema de **gestão de orçamentos** para oficina mecânica que atende **carros e motos**.
 
-Crud OOP com sistema de busca e filtro  feito em PHP7 respeitando a PSR-4.  
- 
- **(O Objetivo do Projeto é demonstrar habilidades com a linguagem PHP , integração com banco de dados MySQL, Bootstrap e gerenciador de dependências Composer, para criação de um crud orientado a objeto simples, rápido e visualmente adequado e responsivo, além de criar uma ferramenta usual para o dia dia de uma oficina mecânica.)**
- 
-### Ferramentas:
-* PHP: 8.3
-* PostgreSQL 16
-* Composer
-* BootstrapCDN
-* Docker + Docker Compose
+Autor: Rafael Buçard
 
-### Executando (exclusivamente via Docker):
+Aplicação web em **PHP 8.3** com arquitetura **MVC própria** (sem framework pesado), banco **PostgreSQL**, autenticação por papéis, orçamentos itemizados, filtros avançados e exportação em PDF. Executa **100% via Docker**.
 
-O projeto roda **somente** com Docker — não é necessário instalar PHP ou PostgreSQL na máquina.
+## Funcionalidades
+
+- **Autenticação por sessão** com papéis: `admin` e `mecanico`.
+- **Usuários** (somente admin): cadastra mecânicos, edita e ativa/desativa.
+- **Clientes**: cadastro mínimo (nome, telefone, contato), lista com busca e tela de detalhe.
+- **Veículos**: vinculados ao cliente (carro ou moto), gerenciados na tela do cliente.
+- **Orçamentos**: itemizados (peças/serviços com quantidade e valor), cálculo automático de total, snapshot dos dados de cliente/veículo, fluxo de status e rastreio de autoria (quem criou / quem atualizou).
+- **Filtros** na listagem de orçamentos: mecânico, status, cliente, placa, tipo de veículo, período e busca rápida — com paginação.
+- **PDF / impressão** do orçamento (dompdf).
+- **UI dashboard** com tema azul em degradê e preto, responsivo.
+
+## Stack
+
+- PHP 8.3 (Apache)
+- PostgreSQL 16
+- Composer (PSR-4) + `dompdf/dompdf`
+- Docker + Docker Compose
+
+## Executando (exclusivamente via Docker)
+
+Não é necessário instalar PHP ou PostgreSQL na máquina.
 
 ```bash
 docker compose up --build
 ```
 
-Depois acesse: **http://localhost:8000**
+Acesse: **http://localhost:8000**
 
-A tabela `repair` é criada automaticamente na primeira subida (via `docker/init.sql`).
+O schema e um usuário inicial são criados automaticamente (via `database/migrations/`).
 
-Para parar e remover os containers (mantendo os dados):
+### Acesso padrão
+
+- Administrador: `admin@oficina.local` / `admin123`
+- Mecânico (exemplo): `mecanico@oficina.local` / `mecanico123`
+
+### Comandos úteis
 
 ```bash
-docker compose down
+docker compose down       # para os containers (mantém os dados)
+docker compose down -v    # para e apaga também o banco (volume)
 ```
 
-Para remover também o banco de dados (volume):
+## Arquitetura (MVC)
 
-```bash
-docker compose down -v
 ```
- 
-   
- ### BootstrapCDN:
- 
-LINK: https://getbootstrap.com.br/docs/4.1/getting-started/introduction/  
-
-   
- ### Base de dados: mechanic/Tabela: repair:
- 
- Banco de dados: **PostgreSQL**
-
- *SQL:* (executado automaticamente pelo Docker via `docker/init.sql` — não precisa rodar manualmente)
- 
-```sql
-CREATE TABLE repair (
-    id          SERIAL PRIMARY KEY,
-    namem       VARCHAR(100) NOT NULL,
-    namec       VARCHAR(100) NOT NULL,
-    description  TEXT NOT NULL,
-    completed   CHAR(1) NOT NULL CHECK (completed IN ('s', 'n')),
-    date        TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    price       VARCHAR(100) NOT NULL
-);
+oficina2.0/
+├── public/                 # raiz servida pelo Apache
+│   ├── index.php           # front controller
+│   ├── .htaccess           # rewrite -> index.php
+│   └── assets/css/app.css  # tema dashboard
+├── app/
+│   ├── Core/               # Router, Controller, Request, Validator, View, Database, Auth, Session
+│   ├── Middleware/         # Auth, Admin, Guest
+│   ├── Controllers/        # Auth, Dashboard, User, Client, Vehicle, Quote
+│   ├── Repositories/       # acesso a dados + filtros parametrizados
+│   ├── Services/           # QuoteService, PdfService
+│   ├── Views/              # templates (layouts, auth, dashboard, clients, vehicles, quotes, users)
+│   └── helpers.php
+├── routes/web.php          # mapa de rotas
+├── config/app.php
+├── database/migrations/    # schema (001) + seed (002)
+├── docker/000-default.conf # vhost Apache (DocumentRoot=public, rewrite)
+├── Dockerfile
+└── docker-compose.yml
 ```
 
-> Observação: o PostgreSQL não possui `ENUM` inline como o MySQL; aqui usamos `CHAR(1)` com uma restrição `CHECK`. O `AUTO_INCREMENT` é substituído por `SERIAL`.
+Responsabilidades: controllers orquestram (sem SQL), repositories executam queries com prepared statements, services concentram regra de negócio (cálculo de totais, snapshot, PDF) e views só apresentam (com escape de saída).
 
- *img:*
- 
-![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_readme/Tabela.png)  
+## Modelo de dados
 
+Tabelas: `users`, `clients`, `vehicles`, `quotes`, `quote_items`. O orçamento guarda um **snapshot** do cliente/veículo e os itens ficam em `quote_items` (peça/serviço, quantidade, valor unitário, subtotal). Veja `database/migrations/001_schema.sql`.
 
-  
-  
-### Composer/ Autoload :
+## Segurança
 
-LINK: https://getcomposer.org/
-
-O `composer install` é executado **dentro do build do Docker** (ver `Dockerfile`), gerando o autoload PSR-4. Não é necessário rodar Composer manualmente.
-
-obs: não está sendo utilizada nenhuma biblioteca além do Autoload.
-
-composer.json 
-``
-{
-   
-    "autoload": {
-        "psr-4": {
-            "App\\": "app/"
-        }
-    }
-}``
-
- ### Desktop:
- 
- ![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_readme/oficinahome.png)  
-
-
- ### Responsividade para Mobile:
- 
-
-![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_readme/delete_id.png)  
-
-
-![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_readme/mobile_cadastro.png)  
-
-
-![alt text](https://github.com/rafaelbucard/oficina2.0/blob/main/img_readme/home_table.png)  
-
-
+- Senhas com `password_hash` (bcrypt).
+- Prepared statements em todas as queries.
+- Escape de saída nas views (proteção XSS).
+- Token CSRF em todos os formulários POST.
+- Autorização por papel via middlewares (`/usuarios/*` restrito ao admin).

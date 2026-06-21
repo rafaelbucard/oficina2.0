@@ -27,10 +27,13 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      # Host na 5433 para evitar conflito com um Postgres local na 5432.
+      # A aplicacao conecta internamente em db:5432 (rede do compose).
+      - "5433:5432"
     volumes:
       - dbdata:/var/lib/postgresql/data
-      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      # Migrations executadas em ordem alfabetica na primeira inicializacao
+      - ./database/migrations:/docker-entrypoint-initdb.d:ro
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d mechanic"]
       interval: 5s
